@@ -5,30 +5,62 @@ import {
     Typography,
     Stack, 
     Button,
-    Box
+    Box,
+    Alert,
+    AlertTitle
 } from '@mui/material'
 
 
 const Form = () => {
+    const [isDone, setIsDone] = useState(false)
+    const [isError, setIsError] = useState(false)
+
     const [title, setTitle] = useState<string>('')
     const [snippet, setSnippet] = useState<string>('')
     const [body, setBody] = useState<string>('')
-    const submitBlog = async() =>{
-        const blog = await postBlog('http://localhost:3000/blog', {
-            title: title, snippet: snippet, body: body
-        }) 
 
-        console.log(blog)
+    const submitBlog = async() =>{
+        try {
+            const blog = await postBlog('http://localhost:3000/blog', {
+                title: title, snippet: snippet, body: body
+            }) 
+            blog.title && setIsDone(true)
+            
+        } catch (error) {
+            setIsError(true)
+        }
+       
+    
     }
   return (
     <Stack display={'block'} >
         <Typography 
+            style ={{textAlign: 'center'}}
             variant='h4' 
             component={'h1'}
             gutterBottom
         >
             Create Blog
         </Typography>
+
+        {
+            isDone && 
+                <Alert 
+                    onClose={()=> setIsDone(false)} 
+                    variant='filled' 
+                    severity='success'
+                >
+                    <AlertTitle>Well Done!</AlertTitle>
+                    Blog Created Successfully
+                </Alert>
+        }
+        {
+            isError && 
+                <Alert onClose={()=> setIsError(false)} variant='filled' severity='error'>
+                    <AlertTitle>Failed!</AlertTitle>
+                    Something Went Wrong Please Retry.
+                </Alert>
+        }
         <Box component={'form'} noValidate autoComplete='off'>
             <Stack direction={'column'} spacing={4}>
                 <Stack direction={'row'} spacing={4} style={{
