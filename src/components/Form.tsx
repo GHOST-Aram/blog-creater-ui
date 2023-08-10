@@ -19,12 +19,19 @@ const Form = () => {
     const [snippet, setSnippet] = useState<string>('')
     const [body, setBody] = useState<string>('')
 
+    //sEND BLOG TODB
     const submitBlog = async() =>{
         try {
-            const blog = await postBlog('http://localhost:3000/blog', {
+            const blog = await postBlog('http://localhost:8000/blog', {
                 title: title, snippet: snippet, body: body
             }) 
-            blog.title && setIsDone(true)
+            //If sucess, clear everything and alert user
+            if(blog.title){
+                setBody('')
+                setTitle('')
+                setSnippet('')
+                setIsDone(true)
+            }
             
         } catch (error) {
             setIsError(true)
@@ -32,86 +39,86 @@ const Form = () => {
        
     
     }
-  return (
-    <Stack display={'block'} >
-        <Typography 
-            style ={{textAlign: 'center'}}
-            variant='h4' 
-            component={'h1'}
-            gutterBottom
-        >
-            Create Blog
-        </Typography>
+    return (
+        <Stack display={'block'} >
+            <Typography 
+                style ={{textAlign: 'center'}}
+                variant='h4' 
+                component={'h1'}
+                gutterBottom
+            >
+                Create Blog
+            </Typography>
 
-        {
-            isDone && 
-                <Alert 
-                    onClose={()=> setIsDone(false)} 
-                    variant='filled' 
-                    severity='success'
-                >
-                    <AlertTitle>Well Done!</AlertTitle>
-                    Blog Created Successfully
-                </Alert>
-        }
-        {
-            isError && 
-                <Alert onClose={()=> setIsError(false)} variant='filled' severity='error'>
-                    <AlertTitle>Failed!</AlertTitle>
-                    Something Went Wrong Please Retry.
-                </Alert>
-        }
-        <Box component={'form'} noValidate autoComplete='off'>
-            <Stack direction={'column'} spacing={4}>
-                <Stack direction={'row'} spacing={4} style={{
-                    // backgroundColor: 'red'
-                }}>
+            {
+                isDone && 
+                    <Alert 
+                        onClose={()=> setIsDone(false)} 
+                        variant='filled' 
+                        severity='success'
+                    >
+                        <AlertTitle>Well Done!</AlertTitle>
+                        Blog Created Successfully
+                    </Alert>
+            }
+            {
+                isError && 
+                    <Alert onClose={()=> setIsError(false)} variant='filled' severity='error'>
+                        <AlertTitle>Failed!</AlertTitle>
+                        Something Went Wrong Please Retry.
+                    </Alert>
+            }
+            <Box component={'form'} noValidate autoComplete='off'>
+                <Stack direction={'column'} spacing={4}>
+                    <Stack direction={'row'} spacing={4} style={{
+                        // backgroundColor: 'red'
+                    }}>
+                        <TextField 
+                            style={{
+                                width: '100%'
+                            }}
+                            label='Title'
+                            color='secondary'
+                            value={title}
+                            onChange={(e)=>setTitle(e.target.value)}
+                            required
+                            error = {(!title)}
+                            helperText = {!title ? 'Title is required' : 'Write a descriptive title.'}
+                        />
+                        <TextField 
+                            style={{
+                                width: '100%'
+                            }}
+                            label='Snippet'
+                            color='secondary'
+                            value={snippet}
+                            onChange={(e)=>setSnippet(e.target.value)}
+                            required
+                            error = {(!snippet)}
+                            helperText = {!snippet ? 'Snippet is required' : 'Write a short and informative Snippet.'}
+                        />
+                    </Stack>
                     <TextField 
-                        style={{
-                            width: '100%'
-                        }}
-                        label='Title'
+                        label = 'Body'
+                        multiline
+                        minRows ={8}
                         color='secondary'
-                        value={title}
-                        onChange={(e)=>setTitle(e.target.value)}
+                        value={body}
+                        onChange={(e)=>setBody(e.target.value)}
                         required
-                        error = {(!title)}
-                        helperText = {!title ? 'Title is required' : 'Write a descriptive title.'}
+                        error = {(!body)}
+                        helperText = {!body ? 'Body is required' : 'Enjoy writing your Story all you want.'}
                     />
-                    <TextField 
-                        style={{
-                            width: '100%'
-                        }}
-                        label='Snippet'
+                    <Button
+                        variant='contained'
+                        size='large'
                         color='secondary'
-                        value={snippet}
-                        onChange={(e)=>setSnippet(e.target.value)}
-                        required
-                        error = {(!snippet)}
-                        helperText = {!snippet ? 'Snippet is required' : 'Write a short and informative Snippet.'}
-                    />
+                        onClick={submitBlog}
+                    >Create Blog</Button>
                 </Stack>
-                <TextField 
-                    label = 'Body'
-                    multiline
-                    minRows ={8}
-                    color='secondary'
-                    value={body}
-                    onChange={(e)=>setBody(e.target.value)}
-                    required
-                    error = {(!body)}
-                    helperText = {!body ? 'Body is required' : 'Enjoy writing your Story all you want.'}
-                />
-                <Button
-                    variant='contained'
-                    size='large'
-                    color='secondary'
-                    onClick={submitBlog}
-                >Create Blog</Button>
-            </Stack>
-        </Box>
-    </Stack>
-  )
+            </Box>
+        </Stack>
+    )
 }
 
 export default Form
