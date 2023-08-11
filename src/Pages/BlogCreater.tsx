@@ -9,15 +9,17 @@ import {
     Alert,
     AlertTitle
 } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 
 const BlogCreater = () => {
-    const [isDone, setIsDone] = useState(false)
     const [isError, setIsError] = useState(false)
 
     const [title, setTitle] = useState<string>('')
     const [snippet, setSnippet] = useState<string>('')
     const [body, setBody] = useState<string>('')
+
+    const navigate = useNavigate()
 
     //sEND BLOG TODB
     const submitBlog = async() =>{
@@ -30,9 +32,8 @@ const BlogCreater = () => {
                 setBody('')
                 setTitle('')
                 setSnippet('')
-                setIsDone(true)
+                navigate(`${blog._id}`, {replace: true})
             }
-            
         } catch (error) {
             setIsError(true)
         }
@@ -49,18 +50,6 @@ const BlogCreater = () => {
             >
                 Create Blog
             </Typography>
-
-            {
-                isDone && 
-                    <Alert 
-                        onClose={()=> setIsDone(false)} 
-                        variant='filled' 
-                        severity='success'
-                    >
-                        <AlertTitle>Well Done!</AlertTitle>
-                        Blog Created Successfully
-                    </Alert>
-            }
             {
                 isError && 
                     <Alert onClose={()=> setIsError(false)} variant='filled' severity='error'>
