@@ -24,7 +24,7 @@ const BlogDetails = () => {
 
     const deleteBlog = () =>{
         deleteBlogById(`http://localhost:8000/blog/${id}`).then(
-            result => navigate('/blogs')
+            result => navigate('/blogs', {replace: true})
         ).catch(error => setIsError(true))
     }
 
