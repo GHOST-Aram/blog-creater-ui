@@ -1,12 +1,19 @@
 import React from 'react';
 import './App.css';
-import Form from './components/Form';
-
+import BlogCreater from './Pages/BlogCreater';
+import BlogDetails from './Pages/BlogDetails';
+import { Routes, Route } from 'react-router-dom';
+import Main from './components/Main';
+import Blogs from './Pages/Blogs';
 function App() {
 	return (
-		<div className="App">
-			<Form />
-		</div>
+		<Main>
+			<Routes>
+				<Route path='/' element = {<BlogCreater /> }/>
+				<Route path='/blogs' element ={<Blogs/>} />
+				<Route path='/:id' element ={<BlogDetails />}/>
+			</Routes>
+		</Main>
 	);
 }
 

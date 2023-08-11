@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 
 
-const Form = () => {
+const BlogCreater = () => {
     const [isDone, setIsDone] = useState(false)
     const [isError, setIsError] = useState(false)
 
@@ -121,4 +121,4 @@ const Form = () => {
     )
 }
 
-export default Form
+export default BlogCreater
