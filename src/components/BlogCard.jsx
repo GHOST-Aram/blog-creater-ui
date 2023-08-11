@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 
 const BlogCard = ({blog}) => {
     return (
-        <Link to={`/${blog._id}`} state={{blog}}>   
+        <Link to={`${blog._id}`} state={{blog}}>   
             <MuiListItem>
                 <Stack display={'blog'}>
                     <Title text ={blog.title}/>

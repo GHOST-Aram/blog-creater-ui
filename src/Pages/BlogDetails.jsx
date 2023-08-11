@@ -19,7 +19,7 @@ const BlogDetails = () => {
     const navigate = useNavigate()
 
     const editBlog = () =>{
-
+        navigate('edit', { state: blog})
     }
 
     const deleteBlog = () =>{
@@ -48,7 +48,9 @@ const BlogDetails = () => {
                     <Subtitle text={blog.snippet}/>
                     <EditButton handleClick={editBlog}/>
                     <Paragraph>{blog.body}</Paragraph>
+                    
                     <DeleteButton handleClick={deleteBlog}/>
+                    
                 </BlockContainer>
             )
             : <ErrorAlert closeAlert={() => setIsError(false)}/>
