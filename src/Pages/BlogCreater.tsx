@@ -80,6 +80,7 @@ const BlogCreater = () => {
                             label='Title'
                             color='secondary'
                             value={title}
+                            variant='filled'
                             onChange={(e)=>setTitle(e.target.value)}
                             required
                             error = {(!title)}
@@ -91,6 +92,7 @@ const BlogCreater = () => {
                             }}
                             label='Snippet'
                             color='secondary'
+                            variant='filled'
                             value={snippet}
                             onChange={(e)=>setSnippet(e.target.value)}
                             required
@@ -103,6 +105,7 @@ const BlogCreater = () => {
                         multiline
                         minRows ={8}
                         color='secondary'
+                        variant='filled'
                         value={body}
                         onChange={(e)=>setBody(e.target.value)}
                         required
@@ -114,7 +117,7 @@ const BlogCreater = () => {
                         size='large'
                         color='secondary'
                         onClick={submitBlog}
-                    >Create Blog</Button>
+                    >Save and Publish</Button>
                 </Stack>
             </Box>
         </Stack>
